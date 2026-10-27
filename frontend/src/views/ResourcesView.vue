@@ -16,6 +16,7 @@ const selected = ref(null);
 const markdown = ref("");
 const loading = ref(false);
 const loadError = ref("");
+const videoError = ref(false);
 const layoutKey = ref(0);
 const readerRef = ref(null);
 let readerTrigger = null;
@@ -28,6 +29,7 @@ const categoryTone = {
   实操清单: "checklist",
   院校案例: "case",
   外部资源: "external",
+  视频素材: "video",
 };
 
 const visible = computed(() => {
@@ -74,6 +76,7 @@ const boardCards = computed(() =>
 
 function metaLabel(item) {
   if (item.pages) return `${item.format} · ${item.pages} 页`;
+  if (item.duration) return `${item.format} · ${item.duration}`;
   return item.format || "点击阅读";
 }
 
@@ -82,6 +85,7 @@ async function open(item) {
   selected.value = item;
   markdown.value = "";
   loadError.value = "";
+  videoError.value = false;
   const currentRequest = ++requestId;
   await nextTick();
   if (currentRequest !== requestId) return;
@@ -113,6 +117,7 @@ function closeReader() {
   selected.value = null;
   markdown.value = "";
   loadError.value = "";
+  videoError.value = false;
   loading.value = false;
   readerTrigger?.focus();
 }
@@ -236,6 +241,29 @@ onUnmounted(() => {
               :src="selected.readUrl"
               :title="`${selected.title} PDF 预览`"
             />
+            <div v-else-if="selected.readType === 'video' && !videoError" class="reader-video-wrap">
+              <video
+                class="reader-video"
+                :src="selected.readUrl"
+                :poster="selected.thumbnail || selected.boardImage || undefined"
+                controls
+                playsinline
+                preload="metadata"
+                :aria-label="selected.title"
+                @error="videoError = true"
+              ></video>
+            </div>
+            <div v-else-if="selected.readType === 'video'" class="reader-status is-error">
+              这段视频无法在当前浏览器播放。可以试试下载原文件，或改成外链条目。
+            </div>
+            <div v-else-if="selected.readType === 'external'" class="reader-status">
+              <a
+                class="reader-external-link"
+                :href="selected.externalUrl || selected.readUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+              >在新标签页打开外部资源 ↗</a>
+            </div>
             <div v-else-if="loading" class="reader-status">正在载入内容...</div>
             <div v-else-if="loadError" class="reader-status is-error">{{ loadError }}</div>
             <MarkdownReader v-else :content="markdown" />
@@ -498,6 +526,10 @@ onUnmounted(() => {
   color: #ffe0a3;
   background: rgba(200, 140, 40, 0.16);
 }
+.resource-board-card[data-tone="video"] em {
+  color: #b9f0ff;
+  background: rgba(56, 132, 200, 0.2);
+}
 
 .resource-board-card strong {
   display: block;
@@ -683,6 +715,36 @@ onUnmounted(() => {
   min-height: 520px;
   border: 0;
   background: #ecebea;
+}
+
+.reader-video-wrap {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  background: #000;
+}
+
+.reader-video {
+  display: block;
+  width: 100%;
+  max-height: calc(100vh - 260px);
+  background: #000;
+}
+
+.reader-external-link {
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: #ff7a18;
+  color: #211008;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.reader-external-link:hover {
+  background: #ffa063;
 }
 
 .reader-status {

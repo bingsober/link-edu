@@ -318,6 +318,28 @@ export const libraryResources = [
     },
     position: { left: 62, top: 320, rotate: 2, z: 3 },
   },
+  {
+    id: "video-interview-scene",
+    title: "面试场景实录（播放测试片段）",
+    category: "视频素材",
+    description: "现代办公场景里的一场面试对话，18 秒。用来验证资源库的视频播放链路；Pexels 免费授权素材，非教学示范。",
+    source: "Pexels / Yan Krukau",
+    year: "2021",
+    stage: "通用",
+    format: "视频 / MP4",
+    duration: "00:18",
+    recommended: true,
+    coverTheme: "blue",
+    coverMark: "面",
+    coverLabel: "面试场景",
+    coverTitle: "18 秒面试对话实录",
+    readType: "video",
+    readUrl: "/library/original/videos/interview-scene-demo.mp4",
+    downloadUrl: "/library/original/videos/interview-scene-demo.mp4",
+    downloadName: "面试场景实录_演示片段.mp4",
+    boardImage: "/library/covers/cover-interview.jpg",
+    position: { left: 46, top: 200, rotate: -2, z: 6 },
+  },
 ];
 
 export const libraryTabs = [
@@ -328,4 +350,5 @@ export const libraryTabs = [
   "实操清单",
   "院校案例",
   "外部资源",
+  "视频素材",
 ];
