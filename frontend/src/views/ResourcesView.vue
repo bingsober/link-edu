@@ -71,27 +71,56 @@ const filtered = computed(() => (tab.value === "全部"
   ? libraryResources
   : libraryResources.filter((item) => item.category === tab.value)));
 
+/** 空分类不隐藏：模块留着，里面写清楚为什么还空着、要什么样的素材。 */
+const emptyCategoryNotes = {
+  视频素材: {
+    title: "这一类还空着",
+    text: "不收通用素材站的空镜。等小组自己拍的试讲录像，或院校授权的课堂录像（学生出镜要打码）。",
+  },
+};
+
+const DEFAULT_EMPTY_NOTE = {
+  title: "这一类暂时空着",
+  text: "还没收录资料。等拿到真正能用、来源写清楚的材料再放进来。",
+};
+
+function emptyNoteFor(category) {
+  return emptyCategoryNotes[category] || DEFAULT_EMPTY_NOTE;
+}
+
 const boardColumns = computed(() => {
-  const order = libraryTabs.filter((name) => name !== "全部");
+  const order = tab.value === "全部"
+    ? libraryTabs.filter((name) => name !== "全部")
+    : [tab.value];
   const items = filtered.value;
-  return order
-    .map((category) => ({
-      category,
-      tone: categoryTone[category] || "topic",
-      items: items.filter((item) => item.category === category),
-    }))
-    .filter((column) => column.items.length);
+  return order.map((category) => ({
+    category,
+    tone: categoryTone[category] || "topic",
+    items: items.filter((item) => item.category === category),
+  }));
 });
 
-/** Fill left-to-right so shorter categories do not leave empty holes between columns. */
-const boardCards = computed(() =>
-  boardColumns.value.flatMap((column) =>
-    column.items.map((item) => ({
-      ...item,
+/** 有条目的分类排卡片，没有的排一张说明卡（保持分类顺序，不空着也不藏起来）。 */
+const boardTiles = computed(() =>
+  boardColumns.value.flatMap((column) => {
+    if (column.items.length) {
+      return column.items.map((item) => ({ ...item, tone: column.tone, placeholder: false }));
+    }
+    const note = emptyNoteFor(column.category);
+    return [{
+      id: `empty-${column.category}`,
+      placeholder: true,
+      category: column.category,
       tone: column.tone,
-    })),
-  ),
+      title: note.title,
+      text: note.text,
+    }];
+  }),
 );
+
+const deckEmptyNote = computed(() => (
+  filtered.value.length ? null : emptyNoteFor(tab.value)
+));
 
 function metaLabel(item) {
   if (item.pages) return `${item.format} · ${item.pages} 页`;
@@ -195,6 +224,11 @@ onUnmounted(() => {
         @activate="activeCard = $event"
         @open="open"
       />
+      <div v-if="deckEmptyNote" class="resource-deck-empty">
+        <span class="resource-deck-empty__tag">{{ tab }}</span>
+        <strong>{{ deckEmptyNote.title }}</strong>
+        <p>{{ deckEmptyNote.text }}</p>
+      </div>
     </section>
 
     <section v-if="collection === 'library'" class="resource-board" aria-label="分类资料浏览">
@@ -211,28 +245,42 @@ onUnmounted(() => {
         </span>
       </div>
       <div class="resource-board__grid">
-        <button
-          v-for="item in boardCards"
-          :key="`board-${item.id}`"
-          type="button"
-          class="resource-board-card"
-          :data-tone="item.tone"
-          @click="open(item)"
-        >
-          <em>{{ item.category }}</em>
-          <strong>{{ item.title }}</strong>
-          <p>{{ item.description }}</p>
-          <span class="resource-board-card__meta">{{ metaLabel(item) }}</span>
-          <span class="resource-board-card__media">
-            <img
-              :src="boardCoverFor(item)"
-              :alt="`${item.title}封面`"
-              loading="lazy"
-              decoding="async"
-            />
-            <i aria-hidden="true">+</i>
-          </span>
-        </button>
+        <template v-for="tile in boardTiles" :key="`board-${tile.id}`">
+          <div
+            v-if="tile.placeholder"
+            class="resource-board-card is-empty"
+            :data-tone="tile.tone"
+          >
+            <em>{{ tile.category }}</em>
+            <strong>{{ tile.title }}</strong>
+            <p>{{ tile.text }}</p>
+            <span class="resource-board-card__meta">0 份 · 等待真实素材</span>
+            <span class="resource-board-card__media is-empty" aria-hidden="true">
+              <i>·</i>
+            </span>
+          </div>
+          <button
+            v-else
+            type="button"
+            class="resource-board-card"
+            :data-tone="tile.tone"
+            @click="open(tile)"
+          >
+            <em>{{ tile.category }}</em>
+            <strong>{{ tile.title }}</strong>
+            <p>{{ tile.description }}</p>
+            <span class="resource-board-card__meta">{{ metaLabel(tile) }}</span>
+            <span class="resource-board-card__media">
+              <img
+                :src="boardCoverFor(tile)"
+                :alt="`${tile.title}封面`"
+                loading="lazy"
+                decoding="async"
+              />
+              <i aria-hidden="true">+</i>
+            </span>
+          </button>
+        </template>
       </div>
     </section>
 
@@ -446,6 +494,43 @@ onUnmounted(() => {
   gap: 14px;
 }
 
+/* 空分类：模块留着，写清楚为什么空，别用别的素材来凑 */
+.resource-deck-empty {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%) rotate(-1deg);
+  width: min(420px, 76%);
+  display: grid;
+  gap: 8px;
+  padding: 22px 24px;
+  border: 1.5px dashed rgba(255, 154, 66, 0.45);
+  border-radius: 18px;
+  background: rgba(28, 22, 34, 0.72);
+  text-align: center;
+  justify-items: center;
+}
+
+.resource-deck-empty__tag {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(255, 122, 24, 0.16);
+  color: #ffd1ad;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.resource-deck-empty strong {
+  font-size: 16px;
+  color: #f3ecf6;
+}
+
+.resource-deck-empty p {
+  margin: 0;
+  color: #a9a2ae;
+  font-size: 12.5px;
+  line-height: 1.75;
+}
+
 .resource-board__head {
   display: flex;
   align-items: end;
@@ -571,6 +656,42 @@ onUnmounted(() => {
 .resource-board-card[data-tone="text"] em {
   color: #cfe6b8;
   background: rgba(110, 160, 70, 0.18);
+}
+
+/* 空分类占位卡：虚线、不可点、不上浮，一眼看出「还没东西」而不是「加载失败」 */
+.resource-board-card.is-empty {
+  border-style: dashed;
+  border-color: rgba(255, 255, 255, 0.16);
+  background: linear-gradient(160deg, rgba(26, 22, 32, 0.72), rgba(14, 11, 18, 0.6));
+  cursor: default;
+}
+
+.resource-board-card.is-empty:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  transform: none;
+}
+
+.resource-board-card.is-empty strong {
+  color: #d7d1dc;
+}
+
+.resource-board-card.is-empty .resource-board-card__media {
+  display: grid;
+  place-items: center;
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  color: #6f6876;
+}
+
+.resource-board-card.is-empty .resource-board-card__media i {
+  position: static;
+  width: auto;
+  height: auto;
+  background: none;
+  box-shadow: none;
+  color: inherit;
+  font-size: 22px;
+  opacity: 0.8;
 }
 
 .resource-board-card strong {
