@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="课堂提问设计清单封面">
+  <defs>
+    <pattern id="p" width="24" height="24" patternUnits="userSpaceOnUse">
+      <rect width="24" height="24" fill="#FFFDF8"/>
+      <circle cx="3" cy="4" r="0.7" fill="#E8E0D0"/>
+      <circle cx="17" cy="18" r="0.6" fill="#EFE8DA"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="500" fill="url(#p)"/>
+  <rect x="0" y="0" width="800" height="10" fill="#7E4A72"/>
+  <rect x="56" y="58" width="193" height="34" rx="17" fill="#F5EBF3"/>
+  <text x="152.5" y="81" text-anchor="middle" font-family="system-ui,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#7E4A72">训练文稿 · 课堂设计</text>
+
+  <text x="56" y="176" font-family="'Songti SC','SimSun',serif" font-size="40" font-weight="700" fill="#2C2730">课堂提问设计清单</text>
+  <text x="56" y="222" font-family="system-ui,'PingFang SC',sans-serif" font-size="16" fill="#8B8578">六层提问 + 候答三秒 + 追问方向</text>
+
+  <line x1="56" y1="268" x2="200" y2="268" stroke="#7E4A72" stroke-width="3"/>
+
+  <g font-family="system-ui,'PingFang SC',sans-serif" font-size="13" fill="#A29A8C">
+    <text x="56" y="430">临客整理 · 二〇二六年</text>
+    <text x="56" y="456">训练材料，非正式国标；引用请注明来源</text>
+  </g>
+
+  <text x="726" y="440" text-anchor="middle" font-family="'Songti SC','SimSun',serif" font-size="150" font-weight="700" fill="#F5EBF3">问</text>
+  <circle cx="726" cy="150" r="46" fill="none" stroke="#7E4A72" stroke-width="1.2" stroke-dasharray="5 7" opacity="0.5"/>
+  <circle cx="726" cy="150" r="28" fill="#7E4A72" opacity="0.12"/>
+</svg>

@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="1280" height="800" role="img" aria-label="课堂站位与视线覆盖示意图">
+  <defs>
+    <pattern id="paper2" width="26" height="26" patternUnits="userSpaceOnUse">
+      <rect width="26" height="26" fill="#FFFDF8"/>
+      <circle cx="3" cy="4" r="0.7" fill="#E4DCCC"/>
+      <circle cx="18" cy="20" r="0.6" fill="#EDE6D8"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#8B8578"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="800" fill="url(#paper2)"/>
+  <text x="70" y="76" font-family="'Songti SC','SimSun',serif" font-size="42" font-weight="700" fill="#2C2730" letter-spacing="2">课堂站位与视线</text>
+  <text x="70" y="112" font-family="system-ui,'PingFang SC','Microsoft YaHei',sans-serif" font-size="17" fill="#8B8578">临客整理 · 俯视平面示意 · 非正式国标</text>
+  <line x1="70" y1="128" x2="1210" y2="128" stroke="#D9D0C0" stroke-width="1"/>
+
+  <!-- 平面卡片 -->
+  <rect x="70" y="152" width="700" height="576" rx="16" fill="#FFFFFF" stroke="#E5DDCE"/>
+  <text x="94" y="184" font-family="system-ui,'PingFang SC',sans-serif" font-size="14" fill="#8B8578" letter-spacing="2">教室俯视图</text>
+
+  <!-- 讲台 -->
+  <rect x="220" y="200" width="400" height="62" rx="8" fill="#F3E6D4" stroke="#D9BE97"/>
+  <text x="420" y="238" text-anchor="middle" font-family="'Songti SC','SimSun',serif" font-size="20" fill="#7A5230">讲 台</text>
+
+  <!-- 黑板示意 -->
+  <rect x="220" y="182" width="400" height="12" rx="3" fill="#2E4038" opacity="0.75"/>
+
+  <!-- 学生座位 4x4 -->
+  <g fill="#F7F4EE" stroke="#DCD5C6">
+    <rect x="170" y="330" width="96" height="60" rx="7"/>
+    <rect x="296" y="330" width="96" height="60" rx="7"/>
+    <rect x="422" y="330" width="96" height="60" rx="7"/>
+    <rect x="548" y="330" width="96" height="60" rx="7"/>
+
+    <rect x="170" y="418" width="96" height="60" rx="7"/>
+    <rect x="296" y="418" width="96" height="60" rx="7"/>
+    <rect x="422" y="418" width="96" height="60" rx="7"/>
+    <rect x="548" y="418" width="96" height="60" rx="7"/>
+
+    <rect x="170" y="506" width="96" height="60" rx="7"/>
+    <rect x="296" y="506" width="96" height="60" rx="7"/>
+    <rect x="422" y="506" width="96" height="60" rx="7"/>
+    <rect x="548" y="506" width="96" height="60" rx="7"/>
+
+    <rect x="170" y="594" width="96" height="60" rx="7"/>
+    <rect x="296" y="594" width="96" height="60" rx="7"/>
+    <rect x="422" y="594" width="96" height="60" rx="7"/>
+    <rect x="548" y="594" width="96" height="60" rx="7"/>
+  </g>
+  <g font-family="system-ui,'PingFang SC',sans-serif" font-size="12" fill="#B3AA9A" text-anchor="middle">
+    <text x="218" y="366">1</text><text x="344" y="366">2</text><text x="470" y="366">3</text><text x="596" y="366">4</text>
+    <text x="218" y="454">5</text><text x="344" y="454">6</text><text x="470" y="454">7</text><text x="596" y="454">8</text>
+    <text x="218" y="542">9</text><text x="344" y="542">10</text><text x="470" y="542">11</text><text x="596" y="542">12</text>
+    <text x="218" y="630">13</text><text x="344" y="630">14</text><text x="470" y="630">15</text><text x="596" y="630">16</text>
+  </g>
+
+  <!-- 视线扇区 A -->
+  <path d="M420 282 L200 640 A 300 300 0 0 0 640 640 Z" fill="#FF7A18" opacity="0.07"/>
+  <path d="M420 282 L200 330 M420 282 L640 330" stroke="#FF7A18" stroke-width="1.2" stroke-dasharray="6 6" opacity="0.5"/>
+
+  <!-- 站位 -->
+  <circle cx="420" cy="272" r="13" fill="#FF7A18"/>
+  <text x="420" y="312" text-anchor="middle" font-family="system-ui,'PingFang SC',sans-serif" font-size="13" font-weight="700" fill="#B4621A">A 讲台位</text>
+
+  <circle cx="122" cy="450" r="13" fill="#2F6B4F"/>
+  <text x="122" y="416" text-anchor="middle" font-family="system-ui,'PingFang SC',sans-serif" font-size="13" font-weight="700" fill="#2F6B4F">B 侧走位</text>
+  <path d="M136 452 L340 470" stroke="#2F6B4F" stroke-width="1.4" stroke-dasharray="5 6" marker-end="url(#arrow)"/>
+
+  <circle cx="690" cy="624" r="13" fill="#9B5C8E"/>
+  <text x="690" y="662" text-anchor="middle" font-family="system-ui,'PingFang SC',sans-serif" font-size="13" font-weight="700" fill="#9B5C8E">C 后排位</text>
+  <path d="M676 610 L540 500" stroke="#9B5C8E" stroke-width="1.4" stroke-dasharray="5 6" marker-end="url(#arrow)"/>
+
+  <!-- 右侧说明 -->
+  <g font-family="system-ui,'PingFang SC','Microsoft YaHei',sans-serif">
+    <rect x="806" y="152" width="404" height="168" rx="14" fill="#FFF4E8" stroke="#F3D5B6"/>
+    <circle cx="838" cy="188" r="15" fill="#FF7A18"/>
+    <text x="838" y="194" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">A</text>
+    <text x="866" y="194" font-size="18" font-weight="700" fill="#B4621A">讲台位 · 主控</text>
+    <text x="838" y="228" font-size="14" fill="#7A5230">覆盖全员、仪式感强，适合导入与小结。</text>
+    <text x="838" y="254" font-size="14" fill="#7A5230">风险：一直站着不动，后排容易走神；</text>
+    <text x="838" y="280" font-size="14" fill="#7A5230">镜头里也会变成“念稿式”。</text>
+    <text x="838" y="306" font-size="13" fill="#A0764A">建议：每 2 分钟动一次位置。</text>
+
+    <rect x="806" y="336" width="404" height="168" rx="14" fill="#EFF6F1" stroke="#C9E0D2"/>
+    <circle cx="838" cy="372" r="15" fill="#2F6B4F"/>
+    <text x="838" y="378" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">B</text>
+    <text x="866" y="378" font-size="18" font-weight="700" fill="#2F6B4F">侧走位 · 追问</text>
+    <text x="838" y="412" font-size="14" fill="#3D5F4C">侧向一步，视线能扫到 1—8 号，</text>
+    <text x="838" y="438" font-size="14" fill="#3D5F4C">适合点名提问、看练习本。</text>
+    <text x="838" y="464" font-size="14" fill="#3D5F4C">风险：站太久会背对另一侧，</text>
+    <text x="838" y="490" font-size="13" fill="#4F7A62">需要边说边转身，别把后背留给全班。</text>
+
+    <rect x="806" y="520" width="404" height="168" rx="14" fill="#F7F0F5" stroke="#DDC7D7"/>
+    <circle cx="838" cy="556" r="15" fill="#9B5C8E"/>
+    <text x="838" y="562" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">C</text>
+    <text x="866" y="562" font-size="18" font-weight="700" fill="#9B5C8E">后排位 · 观察</text>
+    <text x="838" y="596" font-size="14" fill="#6E4A66">走到 13—16 号附近，能看清后排状态，</text>
+    <text x="838" y="622" font-size="14" fill="#6E4A66">适合“把问题抛回后排”的追问。</text>
+    <text x="838" y="648" font-size="14" fill="#6E4A66">风险：离黑板太远，板书指认会断。</text>
+    <text x="838" y="674" font-size="13" fill="#8A5E80">建议：只在练习/追问环节用，10—20 秒为限。</text>
+  </g>
+
+  <text x="70" y="760" font-family="system-ui,'PingFang SC',sans-serif" font-size="13" fill="#A29A8C">说明：座位编号仅为示意，实际教室排布不同；微格教室可用摄像头取景框代替视线扇区自检。</text>
+</svg>

@@ -12,9 +12,15 @@ export const libraryBoardCovers = {
   'puer-case': '/library/covers/cover-case.jpg',
   'tangshan-assessment': '/library/covers/cover-assessment.jpg',
   'external-links': '/library/covers/cover-links.jpg',
-}
+};
+
+/**
+ * 兜底封面：视频条目走 thumbnail、图示条目走 boardImage、文稿条目走
+ * covers/doc-*.svg，都没有时用这张，避免分类网格出现空白破图。
+ */
+const FALLBACK_COVER = '/library/covers/cover-official.jpg';
 
 export function boardCoverFor(item) {
-  if (!item) return ''
-  return item.boardImage || libraryBoardCovers[item.id] || item.thumbnail || ''
+  if (!item) return '';
+  return item.boardImage || libraryBoardCovers[item.id] || item.thumbnail || FALLBACK_COVER;
 }

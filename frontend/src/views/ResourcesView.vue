@@ -30,31 +30,50 @@ const categoryTone = {
   院校案例: "case",
   外部资源: "external",
   视频素材: "video",
+  图示素材: "diagram",
+  训练文稿: "text",
 };
 
-const visible = computed(() => {
-  if (tab.value === "全部") return libraryResources;
-  const matches = libraryResources.filter((item) => item.category === tab.value);
-  const slots = {
-    1: [38],
-    2: [22, 58],
-    3: [7, 38, 69],
-  }[matches.length] || [4, 27, 50, 73];
+/** Card-wall slots: 4 per row, 2 rows fit the 460px deck. */
+const DECK_COLUMNS = [2, 26, 50, 74];
+const DECK_ROTATE = [-3, 2, -2, 3];
 
-  return matches.map((item, index) => ({
-    ...item,
-    position: {
-      ...item.position,
-      left: slots[index],
-      top: index % 2 === 0 ? 70 : 130,
-      rotate: index % 2 === 0 ? -2 : 3,
-    },
-  }));
+function deckSlot(index) {
+  return {
+    left: DECK_COLUMNS[index % 4],
+    top: 24 + Math.floor(index / 4) * 144,
+    rotate: DECK_ROTATE[index % 4],
+    z: 4 + (index % 4),
+  };
+}
+
+/**
+ * The draggable wall only shows a curated set (max 8) so cards never
+ * overlap the deck edges; the full catalogue lives in the grid below.
+ */
+const visible = computed(() => {
+  const all = tab.value === "全部"
+    ? libraryResources
+    : libraryResources.filter((item) => item.category === tab.value);
+  const pick = tab.value === "全部"
+    ? libraryTabs
+        .filter((name) => name !== "全部")
+        .map((name) => all
+          .filter((item) => item.category === name)
+          .sort((a, b) => Number(Boolean(b.recommended)) - Number(Boolean(a.recommended)))[0])
+        .filter(Boolean)
+    : all;
+  return pick.slice(0, 8).map((item, index) => ({ ...item, position: deckSlot(index) }));
 });
+
+
+const filtered = computed(() => (tab.value === "全部"
+  ? libraryResources
+  : libraryResources.filter((item) => item.category === tab.value)));
 
 const boardColumns = computed(() => {
   const order = libraryTabs.filter((name) => name !== "全部");
-  const items = visible.value;
+  const items = filtered.value;
   return order
     .map((category) => ({
       category,
@@ -256,6 +275,14 @@ onUnmounted(() => {
             <div v-else-if="selected.readType === 'video'" class="reader-status is-error">
               这段视频无法在当前浏览器播放。可以试试下载原文件，或改成外链条目。
             </div>
+            <div v-else-if="selected.readType === 'image'" class="reader-image-wrap">
+              <img
+                :src="selected.readUrl"
+                :alt="selected.title"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
             <div v-else-if="selected.readType === 'external'" class="reader-status">
               <a
                 class="reader-external-link"
@@ -273,8 +300,15 @@ onUnmounted(() => {
             <span>
               {{ selected.format }}
               <template v-if="selected.pages"> · {{ selected.pages }} 页</template>
+              <template v-else-if="selected.duration"> · {{ selected.duration }}</template>
             </span>
-            <a :href="selected.downloadUrl" :download="selected.downloadName">下载原文件</a>
+            <a
+              v-if="selected.readType === 'external'"
+              :href="selected.externalUrl || selected.readUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >打开链接 ↗</a>
+            <a v-else :href="selected.downloadUrl" :download="selected.downloadName">下载原文件</a>
           </footer>
         </section>
       </dialog>
@@ -530,6 +564,14 @@ onUnmounted(() => {
   color: #b9f0ff;
   background: rgba(56, 132, 200, 0.2);
 }
+.resource-board-card[data-tone="diagram"] em {
+  color: #ffd9a8;
+  background: rgba(214, 148, 40, 0.18);
+}
+.resource-board-card[data-tone="text"] em {
+  color: #cfe6b8;
+  background: rgba(110, 160, 70, 0.18);
+}
 
 .resource-board-card strong {
   display: block;
@@ -731,6 +773,26 @@ onUnmounted(() => {
   width: 100%;
   max-height: calc(100vh - 260px);
   background: #000;
+}
+
+.reader-image-wrap {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  padding: 12px;
+  background: #fffdf8;
+  overflow: auto;
+}
+
+.reader-image-wrap img {
+  display: block;
+  width: 100%;
+  max-width: 1080px;
+  height: auto;
+  border-radius: 10px;
+  background: #fffdf8;
 }
 
 .reader-external-link {

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="1280" height="800" role="img" aria-label="提问候答时间轴示意图">
+  <defs>
+    <pattern id="paper3" width="26" height="26" patternUnits="userSpaceOnUse">
+      <rect width="26" height="26" fill="#FFFDF8"/>
+      <circle cx="4" cy="5" r="0.7" fill="#E4DCCC"/>
+      <circle cx="20" cy="21" r="0.6" fill="#EDE6D8"/>
+    </pattern>
+    <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#B9B0A0"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="800" fill="url(#paper3)"/>
+  <text x="90" y="76" font-family="'Songti SC','SimSun',serif" font-size="42" font-weight="700" fill="#2C2730" letter-spacing="2">候答时间：提问之后别急着点名</text>
+  <text x="90" y="112" font-family="system-ui,'PingFang SC','Microsoft YaHei',sans-serif" font-size="17" fill="#8B8578">临客整理 · 课堂节奏训练 · 经验建议，非正式国标</text>
+  <line x1="90" y1="128" x2="1190" y2="128" stroke="#D9D0C0" stroke-width="1"/>
+
+  <!-- 刻度 -->
+  <g stroke="#DCD3C4" stroke-width="1">
+    <line x1="140" y1="212" x2="1160" y2="212"/>
+  </g>
+  <g font-family="system-ui,'PingFang SC',sans-serif" font-size="12" fill="#A29A8C" text-anchor="middle">
+    <text x="140" y="200">0s</text><text x="225" y="200">1</text><text x="310" y="200">2</text><text x="395" y="200">3</text>
+    <text x="480" y="200">4</text><text x="565" y="200">5</text><text x="650" y="200">6</text><text x="735" y="200">7</text>
+    <text x="820" y="200">8</text><text x="905" y="200">9</text><text x="990" y="200">10</text><text x="1075" y="200">11</text><text x="1160" y="200">12s</text>
+  </g>
+  <g stroke="#EDE5D6" stroke-width="1">
+    <line x1="225" y1="212" x2="225" y2="640"/><line x1="310" y1="212" x2="310" y2="640"/>
+    <line x1="395" y1="212" x2="395" y2="640"/><line x1="480" y1="212" x2="480" y2="640"/>
+    <line x1="565" y1="212" x2="565" y2="640"/><line x1="650" y1="212" x2="650" y2="640"/>
+    <line x1="735" y1="212" x2="735" y2="640"/><line x1="820" y1="212" x2="820" y2="640"/>
+    <line x1="905" y1="212" x2="905" y2="640"/><line x1="990" y1="212" x2="990" y2="640"/>
+    <line x1="1075" y1="212" x2="1075" y2="640"/>
+  </g>
+
+  <!-- 推荐节奏 -->
+  <text x="90" y="272" font-family="system-ui,'PingFang SC',sans-serif" font-size="15" font-weight="700" fill="#2F6B4F">推荐节奏</text>
+  <text x="90" y="294" font-family="system-ui,'PingFang SC',sans-serif" font-size="12" fill="#7E9C8A">候答 3—5 秒</text>
+
+  <rect x="140" y="300" width="340" height="58" rx="9" fill="#FFEEDD" stroke="#F0C79E"/>
+  <text x="310" y="335" text-anchor="middle" font-family="system-ui,'PingFang SC',sans-serif" font-size="15" fill="#B4621A">① 发问后留白，全班在心里过一遍</text>
+
+  <rect x="480" y="300" width="340" height="58" rx="9" fill="#E7F2EA" stroke="#BCDAC7"/>
+  <text x="650" y="335" text-anchor="middle" font-family="system-ui,'PingFang SC',sans-serif" font-size="15" fill="#2F6B4F">② 点名 → 学生完整说完</text>
+
+  <rect x="820" y="300" width="255" height="58" rx="9" fill="#F3EAF3" stroke="#D9C3D6"/>
+  <text x="947" y="335" text-anchor="middle" font-family="system-ui,'PingFang SC',sans-serif" font-size="15" fill="#7E4A72">③ 反馈 + 一句追问</text>
+
+  <g fill="#2C2730">
+    <circle cx="140" cy="329" r="7"/>
+    <circle cx="480" cy="329" r="7"/>
+    <circle cx="820" cy="329" r="7"/>
+  </g>
+  <g font-family="system-ui,'PingFang SC',sans-serif" font-size="12" fill="#6F675C" text-anchor="middle">
+    <text x="140" y="382">抛问题</text><text x="480" y="382">点名</text><text x="820" y="382">回应</text>
+  </g>
+
+  <!-- 常见问题 -->
+  <text x="90" y="470" font-family="system-ui,'PingFang SC',sans-serif" font-size="15" font-weight="700" fill="#A6403A">常见问题</text>
+  <text x="90" y="492" font-family="system-ui,'PingFang SC',sans-serif" font-size="12" fill="#B9756F">候答不足 1 秒</text>
+
+  <rect x="140" y="498" width="68" height="58" rx="9" fill="#FBEAEA" stroke="#EFC7C7"/>
+  <text x="174" y="533" text-anchor="middle" font-family="system-ui,'PingFang SC',sans-serif" font-size="13" fill="#A6403A">0.8s</text>
+
+  <text x="228" y="533" font-family="system-ui,'PingFang SC',sans-serif" font-size="15" fill="#A6403A">→ 立刻点名：“你来说”</text>
+
+  <rect x="520" y="498" width="420" height="58" rx="9" fill="#F7F2EA" stroke="#E3D6C2" stroke-dasharray="6 6"/>
+  <text x="730" y="533" text-anchor="middle" font-family="system-ui,'PingFang SC',sans-serif" font-size="14" fill="#8A7E6C">学生卡壳 / 只答半句 / 全班沉默</text>
+
+  <path d="M208 566 Q 240 606 300 596" stroke="#C9A0A0" stroke-width="1.4" fill="none" stroke-dasharray="5 5"/>
+  <text x="306" y="602" font-family="system-ui,'PingFang SC',sans-serif" font-size="13" fill="#A6403A">只剩“抢答型”学生举手，覆盖面变窄</text>
+
+  <!-- 底部三条 -->
+  <g font-family="system-ui,'PingFang SC','Microsoft YaHei',sans-serif">
+    <rect x="90" y="652" width="342" height="96" rx="12" fill="#FFFFFF" stroke="#E5DDCE"/>
+    <text x="112" y="682" font-size="15" font-weight="700" fill="#B4621A">① 先想再举</text>
+    <text x="112" y="706" font-size="13" fill="#6F675C">说“想好的举手，我请一位同学说思路”，</text>
+    <text x="112" y="728" font-size="13" fill="#6F675C">给全班 3—5 秒，而不是给最快的人。</text>
+
+    <rect x="452" y="652" width="342" height="96" rx="12" fill="#FFFFFF" stroke="#E5DDCE"/>
+    <text x="474" y="682" font-size="15" font-weight="700" fill="#2F6B4F">② 允许改口</text>
+    <text x="474" y="706" font-size="13" fill="#6F675C">学生答错时先问“你是怎么想的”，</text>
+    <text x="474" y="728" font-size="13" fill="#6F675C">把错误当成教学资源，别急着换人。</text>
+
+    <rect x="814" y="652" width="376" height="96" rx="12" fill="#FFFFFF" stroke="#E5DDCE"/>
+    <text x="836" y="682" font-size="15" font-weight="700" fill="#7E4A72">③ 追问一句就够</text>
+    <text x="836" y="706" font-size="13" fill="#6F675C">“为什么”“还有别的分法吗”“如果换成 4 份呢”，</text>
+    <text x="836" y="728" font-size="13" fill="#6F675C">一次追问比三次重复更能看出理解。</text>
+  </g>
+</svg>
