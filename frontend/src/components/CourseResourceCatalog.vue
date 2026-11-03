@@ -1,6 +1,7 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import ClassroomDialog from './ClassroomDialog.vue'
+import MarkdownReader from './MarkdownReader.vue'
 import { fetchResources } from '../services/dashboard'
 import { resolveResourceLink } from '../utils/resourceLinks.js'
 
@@ -13,6 +14,37 @@ const tabs = ['全部', '教案', '素材', '报告', '档案']
 const visible = computed(() => tab.value === '全部' ? items.value : items.value.filter(item => item.category === tab.value))
 const link = computed(() => resolveResourceLink(detail.value?.file_url, window.location.origin))
 const detailOpen = computed({ get: () => Boolean(detail.value), set: value => { if (!value) detail.value = null } })
+
+// 本地 Markdown 直接在弹窗内渲染：新标签页打开裸文件会被浏览器按 GBK 猜编码，中文全变乱码
+const isLocalMarkdown = computed(() => {
+  if (!detail.value) return false
+  try {
+    const url = new URL(detail.value.file_url, window.location.origin)
+    return url.origin === window.location.origin && /\.md$/i.test(url.pathname)
+  } catch {
+    return false
+  }
+})
+const markdown = ref('')
+const markdownError = ref('')
+const markdownLoading = ref(false)
+
+async function loadMarkdown() {
+  markdown.value = ''
+  markdownError.value = ''
+  if (!isLocalMarkdown.value) return
+  markdownLoading.value = true
+  try {
+    const response = await fetch(link.value.url)
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+    markdown.value = await response.text()
+  } catch {
+    markdownError.value = '内容暂时无法加载，可用「下载文件」获取原件查看。'
+  } finally {
+    markdownLoading.value = false
+  }
+}
+watch(detail, loadMarkdown)
 
 async function loadResources() {
   loading.value = true
@@ -54,6 +86,16 @@ onMounted(loadResources)
         <p>{{ detail.description || '暂无详细说明。' }}</p>
         <p v-if="link.status === 'missing'" role="status">当前资源没有可用文件链接。</p>
         <p v-else-if="link.status === 'invalid'" role="alert">文件链接无效，请联系管理员更新。</p>
+        <template v-else-if="isLocalMarkdown">
+          <p v-if="markdownLoading" class="course-search-feedback" role="status">正在加载内容…</p>
+          <p v-else-if="markdownError" class="course-search-feedback" role="alert">{{ markdownError }}</p>
+          <div v-else class="resource-md-preview">
+            <MarkdownReader :content="markdown" />
+          </div>
+          <div class="resource-actions">
+            <a :href="link.url" download>下载文件</a>
+          </div>
+        </template>
         <div v-else class="resource-actions">
           <a :href="link.url" target="_blank" rel="noopener noreferrer">{{ link.external ? '访问来源网站' : '打开文件' }}</a>
           <a v-if="!link.external" :href="link.url" download>下载文件</a>
@@ -71,4 +113,10 @@ onMounted(loadResources)
 .resource-actions { display:flex; gap:16px; margin-top:20px; }
 .resource-actions a { color:#ffd1ad; padding:10px 16px; border:1px solid #ff974859; border-radius:10px; }
 .resource-list li>div { min-width:0; overflow-wrap:anywhere; }
+.course-resource-catalog :deep(.classroom-dialog) { width:min(780px, calc(100vw - 32px)); }
+.resource-md-preview { margin:12px -20px 0; border-top:1px solid var(--line); max-height:52dvh; overflow:auto; overscroll-behavior:contain; }
+.resource-md-preview :deep(.markdown-reader) { padding:18px 20px 28px; }
+.resource-md-preview :deep(h1) { font-size:22px; margin-bottom:14px; }
+.resource-md-preview :deep(h2) { margin:22px 0 10px; font-size:17px; }
+.resource-md-preview :deep(h3) { margin:18px 0 8px; }
 </style>
