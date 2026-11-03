@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="试讲逐字稿 拼音课封面">
+  <defs>
+    <pattern id="p" width="24" height="24" patternUnits="userSpaceOnUse">
+      <rect width="24" height="24" fill="#FFFDF8"/>
+      <circle cx="3" cy="4" r="0.7" fill="#E8E0D0"/>
+      <circle cx="17" cy="18" r="0.6" fill="#EFE8DA"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="500" fill="url(#p)"/>
+  <rect x="0" y="0" width="800" height="10" fill="#B03A5B"/>
+  <rect x="56" y="58" width="380" height="34" rx="17" fill="#F7E3EA"/>
+  <text x="246.0" y="81" text-anchor="middle" font-family="system-ui,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#B03A5B">训练文稿 · 逐字稿</text>
+
+  <text x="56" y="176" font-family="'Songti SC','SimSun',serif" font-size="38" font-weight="700" fill="#2C2730">逐字稿《b p m f》</text>
+  <text x="56" y="222" font-family="system-ui,'PingFang SC',sans-serif" font-size="16" fill="#8B8578">低学段：慢语速、短指令、多游戏</text>
+
+  <line x1="56" y1="268" x2="200" y2="268" stroke="#B03A5B" stroke-width="3"/>
+
+  <g font-family="system-ui,'PingFang SC',sans-serif" font-size="13" fill="#A29A8C">
+    <text x="56" y="430">临客整理 · 二〇二六年</text>
+    <text x="56" y="456">训练材料，非正式国标；引用请注明来源</text>
+  </g>
+
+  <text x="726" y="440" text-anchor="middle" font-family="'Songti SC','SimSun',serif" font-size="150" font-weight="700" fill="#F7E3EA">音</text>
+  <circle cx="726" cy="150" r="46" fill="none" stroke="#B03A5B" stroke-width="1.2" stroke-dasharray="5 7" opacity="0.5"/>
+  <circle cx="726" cy="150" r="28" fill="#B03A5B" opacity="0.12"/>
+</svg>
